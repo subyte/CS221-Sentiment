@@ -127,7 +127,16 @@ def extractCharacterFeatures(n):
     '''
     def extract(x):
         # BEGIN_YOUR_CODE (around 10 lines of code expected)
-        raise Exception("Not implemented yet")
+        # raise Exception("Not implemented yet")
+        feature = {}
+        x = x.replace(" ", "")
+        for i in range(0,len(x)-n+1):
+            word = x[i:i+n]
+            if word in feature:
+                feature[word] = feature[word] + 1
+            else:
+                feature[word] = 1
+        return feature
         # END_YOUR_CODE
     return extract
 
