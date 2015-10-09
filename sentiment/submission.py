@@ -23,7 +23,15 @@ def extractWordFeatures(x):
     Example: "I am what I am" --> {'I': 2, 'am': 2, 'what': 1}
     """
     # BEGIN_YOUR_CODE (around 5 lines of code expected)
-    raise Exception("Not implemented yet")
+    # raise Exception("Not implemented yet")
+    dict = {}
+    words = x.split()
+    for word in words:
+        if word in dict:
+            dict[word] = dict[word] + 1
+        else:
+            dict[word] = 1
+    return dict
     # END_YOUR_CODE
 
 ############################################################
