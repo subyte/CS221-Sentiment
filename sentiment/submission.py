@@ -24,14 +24,14 @@ def extractWordFeatures(x):
     """
     # BEGIN_YOUR_CODE (around 5 lines of code expected)
     # raise Exception("Not implemented yet")
-    dict = {}
+    dictionary = {}
     words = x.split()
     for word in words:
-        if word in dict:
-            dict[word] = dict[word] + 1
+        if word in dictionary:
+            dictionary[word] = dictionary[word] + 1
         else:
-            dict[word] = 1
-    return dict
+            dictionary[word] = 1
+    return dictionary
     # END_YOUR_CODE
 
 ############################################################
@@ -100,7 +100,8 @@ def generateDataset(numExamples, weights):
     # y should be 1 or -1 as classified by the weight vector.
     def generateExample():
         # BEGIN_YOUR_CODE (around 2 lines of code expected)
-        raise Exception("Not implemented yet")
+        # raise Exception("Not implemented yet")
+        
         # END_YOUR_CODE
         return (phi, y)
     return [generateExample() for _ in range(numExamples)]
