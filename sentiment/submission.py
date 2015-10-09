@@ -52,7 +52,36 @@ def learnPredictor(trainExamples, testExamples, featureExtractor):
     '''
     weights = {}  # feature => weight
     # BEGIN_YOUR_CODE (around 15 lines of code expected)
-    raise Exception("Not implemented yet")
+    # raise Exception("Not implemented yet")
+    numIters = 100
+    stepSize = .1
+
+    def predictor(x):
+        dp = dotProduct(weights,x)
+        if(dp > 0):
+            return 1
+        else:
+            return -1
+
+    def gradient(weights,feature,y):
+        if len(feature) == 0:
+            return 0
+        value = dotProduct(weights,feature)*y
+        if value < 1:
+            ret = {}
+            for k,v in feature.items():
+                ret[k] = v*y*-1
+            return ret
+        else:
+            return 0
+
+    for i in range(numIters):
+        for x,y in trainExamples:
+            feature = featureExtractor(x)
+            ret = gradient(weights,feature,y)
+            if ret != 0:
+                increment(weights,-1*stepSize,ret) 
+        #evaluatePredictor(trainExamples, predictor)
     # END_YOUR_CODE
     return weights
 
