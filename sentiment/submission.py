@@ -165,19 +165,26 @@ def kmeans(examples, K, maxIters):
     # BEGIN_YOUR_CODE (around 35 lines of code expected)
     # raise Exception("Not implemented yet")
     # Assuming data points are unique
-    def distance(point1,point2):
-        sum = 0
+    def cartesianDistance(point1,point2):
+        added = 0
         for k,v in point1.items():
-            dif = (point1[k] + point2[k])**2
-            sum = sum+dif
-        return math.sqrt(sum)
+            dif = (point1[k] - point2[k])**2
+            added = added+dif
+        return math.sqrt(added)
+
+    def distance(point1,point2):
+        vec = {}
+        for k,v in point1.items():
+            dif = (point1[k] - point2[k])
+            vec[k] = dif
+        return dotProduct(vec,vec)
 
     def classify(centers,point):
         minDistance = sys.maxint
         minCenter = 0
         for i in range(len(centers)):
             center = centers[i]
-            dist = distance(center,point)
+            dist = distance(point,center)
             if dist < minDistance:
                 minDistance = dist
                 minCenter = i
@@ -203,7 +210,7 @@ def kmeans(examples, K, maxIters):
         for i in range(len(examples)):
             example = examples[i]
             center = centers[assignments[i]]
-            loss = loss + distance(example,center)**2
+            loss = loss + distance(example,center)
         return loss
 
     # assignments: example number -> cluster number
