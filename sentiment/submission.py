@@ -163,5 +163,70 @@ def kmeans(examples, K, maxIters):
             final reconstruction loss)
     '''
     # BEGIN_YOUR_CODE (around 35 lines of code expected)
-    raise Exception("Not implemented yet")
+    # raise Exception("Not implemented yet")
+    # Assuming data points are unique
+    def distance(point1,point2):
+        sum = 0
+        for k,v in point1.items():
+            dif = (point1[k] + point2[k])**2
+            sum = sum+dif
+        return math.sqrt(sum)
+
+    def classify(centers,point):
+        minDistance = sys.maxint
+        minCenter = 0
+        for i in range(len(centers)):
+            center = centers[i]
+            dist = distance(center,point)
+            if dist < minDistance:
+                minDistance = dist
+                minCenter = i
+        return minCenter
+
+    def calculateCenters(centers, clusters):
+       for i in range(len(centers)):
+            newCenter = {}
+            data = clusters[i] #list of maps
+            for point in data: #a map
+                for pointKey,pointValue in point.items():
+                    if pointKey in newCenter:
+                        newCenter[pointKey] = newCenter[pointKey] + point[pointKey]
+                    else:
+                        newCenter[pointKey] = point[pointKey]
+            numDims = len(newCenter)
+            for centerKey,centerValue in newCenter.items():
+                newCenter[centerKey] = newCenter[centerKey]/numDims
+            centers[i] = newCenter
+    
+    def kMeansLoss(centers,assignments,examples):
+        loss = 0
+        for i in range(len(examples)):
+            example = examples[i]
+            center = centers[assignments[i]]
+            loss = loss + distance(example,center)**2
+        return loss
+
+    # assignments: example number -> cluster number
+    assignments = range(len(examples))
+    # clusters: cluster number -> cluster center point
+    centers = random.sample(examples,K)
+    # for every iteration
+    for i in range(maxIters):
+        # clusters: cluster number -> list of examples
+        clusters = {}
+        # print("centers: ",centers)
+        for p in range(K):
+            clusters[p] = []    
+        # go through all the examples and assign to the correct center
+        for j in range(len(examples)):
+            example = examples[j]
+            numCenter = classify(centers,example)
+            assignments[j] = numCenter
+            clusters[numCenter].append(examples[j])
+        # recalculate the centers
+        # print("clusters",clusters)
+        calculateCenters(centers,clusters)
+    totalCost = kMeansLoss(centers,assignments,examples)
+    print(totalCost,": totalCost")
+    return centers, assignments, totalCost
     # END_YOUR_CODE
