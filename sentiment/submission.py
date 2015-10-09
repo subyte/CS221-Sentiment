@@ -101,7 +101,16 @@ def generateDataset(numExamples, weights):
     def generateExample():
         # BEGIN_YOUR_CODE (around 2 lines of code expected)
         # raise Exception("Not implemented yet")
-        
+        phi = {}
+        numKeys = random.randint(1,len(weights))
+        for i in range(numKeys):
+            key = random.choice(weights.keys())
+            phi[key] = random.randint(1,20)
+        score = dotProduct(weights,phi)
+        if score > 0:
+            y = 1
+        else:
+            y = -1
         # END_YOUR_CODE
         return (phi, y)
     return [generateExample() for _ in range(numExamples)]
