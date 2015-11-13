@@ -25,7 +25,7 @@
             'messages': [],
             'name': '3b-1',
             'points': 1,
-            'seconds': 4},
+            'seconds': 3},
            {'description': 'test correct generation of random dataset labels',
             'extraCredit': False,
             'maxPoints': 1,
